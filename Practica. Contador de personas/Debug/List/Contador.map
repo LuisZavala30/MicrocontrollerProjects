@@ -1,0 +1,32 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+cursor                                                                            0x0A00       1
+Cuenta                                                                            0x0A01       2
+Cadena                                                                            0x0A03       3
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+SetupLCD                                                                          0x000C6     43
+PulseEn                                                                           0x000F1      3
+SendDataBitsLCD                                                                   0x000F4     24
+WriteComandLCD                                                                    0x0010C      5
+CharLCD                                                                           0x00111     27
+StringLCD                                                                         0x0012C     13
+StringLCDVar                                                                      0x00139     14
+MoveCursor                                                                        0x00147     36
+main                                                                              0x0016B     67
+put_buff_G100                                                                     0x001AE     43
+_print_G100                                                                       0x001D9    294
+sprintf                                                                           0x002FF     49
+strlen                                                                            0x00330     12
+strlenf                                                                           0x0033C     13

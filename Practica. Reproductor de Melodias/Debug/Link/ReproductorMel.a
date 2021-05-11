@@ -1,0 +1,505 @@
+;
+;#include <mega2560.h>
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x01
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x0E
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x04
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x06
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x0C
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0x0E
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x02
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=smcr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;#include <delay.h>
+;
+;#define NOTE_B0  31
+;#define NOTE_C1  33
+;#define NOTE_CS1 35
+;#define NOTE_D1  37
+;#define NOTE_DS1 39
+;#define NOTE_E1  41
+;#define NOTE_F1  44
+;#define NOTE_FS1 46
+;#define NOTE_G1  49
+;#define NOTE_GS1 52
+;#define NOTE_A1  55
+;#define NOTE_AS1 58
+;#define NOTE_B1  62
+;#define NOTE_C2  65
+;#define NOTE_CS2 69
+;#define NOTE_D2  73
+;#define NOTE_DS2 78
+;#define NOTE_E2  82
+;#define NOTE_F2  87
+;#define NOTE_FS2 93
+;#define NOTE_G2  98
+;#define NOTE_GS2 104
+;#define NOTE_A2  110
+;#define NOTE_AS2 117
+;#define NOTE_B2  123
+;#define NOTE_C3  131
+;#define NOTE_CS3 139
+;#define NOTE_D3  147
+;#define NOTE_DS3 156
+;#define NOTE_E3  165
+;#define NOTE_F3  175
+;#define NOTE_FS3 185
+;#define NOTE_G3  196
+;#define NOTE_GS3 208
+;#define NOTE_A3  220
+;#define NOTE_AS3 233
+;#define NOTE_B3  247
+;#define NOTE_C4  262
+;#define NOTE_CS4 277
+;#define NOTE_D4  294
+;#define NOTE_DS4 311
+;#define NOTE_E4  330
+;#define NOTE_F4  349
+;#define NOTE_FS4 370
+;#define NOTE_G4  392
+;#define NOTE_GS4 415
+;#define NOTE_A4  440
+;#define NOTE_AS4 466
+;#define NOTE_B4  494
+;#define NOTE_C5  523
+;#define NOTE_CS5 554
+;#define NOTE_D5  587
+;#define NOTE_DS5 622
+;#define NOTE_E5  659
+;#define NOTE_F5  698
+;#define NOTE_FS5 740
+;#define NOTE_G5  784
+;#define NOTE_GS5 831
+;#define NOTE_A5  880
+;#define NOTE_AS5 932
+;#define NOTE_B5  988
+;#define NOTE_C6  1047
+;#define NOTE_CS6 1109
+;#define NOTE_D6  1175
+;#define NOTE_DS6 1245
+;#define NOTE_E6  1319
+;#define NOTE_F6  1397
+;#define NOTE_FS6 1480
+;#define NOTE_G6  1568
+;#define NOTE_GS6 1661
+;#define NOTE_A6  1760
+;#define NOTE_AS6 1865
+;#define NOTE_B6  1976
+;#define NOTE_C7  2093
+;#define NOTE_CS7 2217
+;#define NOTE_D7  2349
+;#define NOTE_DS7 2489
+;#define NOTE_E7  2637
+;#define NOTE_F7  2794
+;#define NOTE_FS7 2960
+;#define NOTE_G7  3136
+;#define NOTE_GS7 3322
+;#define NOTE_A7  3520
+;#define NOTE_AS7 3729
+;#define NOTE_B7  3951
+;#define NOTE_C8  4186
+;#define NOTE_CS8 4435
+;#define NOTE_D8  4699
+;#define NOTE_DS8 4978
+;#define REST      0
+;
+;int melody[] = {
+;
+;
+;  NOTE_E4,4,  NOTE_E4,4,  NOTE_F4,4,  NOTE_G4,4,//1
+;  NOTE_G4,4,  NOTE_F4,4,  NOTE_E4,4,  NOTE_D4,4,
+;  NOTE_C4,4,  NOTE_C4,4,  NOTE_D4,4,  NOTE_E4,4,
+;  NOTE_E4,-4, NOTE_D4,8,  NOTE_D4,2,
+;
+;  NOTE_E4,4,  NOTE_E4,4,  NOTE_F4,4,  NOTE_G4,4,//4
+;  NOTE_G4,4,  NOTE_F4,4,  NOTE_E4,4,  NOTE_D4,4,
+;  NOTE_C4,4,  NOTE_C4,4,  NOTE_D4,4,  NOTE_E4,4,
+;  NOTE_D4,-4,  NOTE_C4,8,  NOTE_C4,2,
+;
+;  NOTE_D4,4,  NOTE_D4,4,  NOTE_E4,4,  NOTE_C4,4,//8
+;  NOTE_D4,4,  NOTE_E4,8,  NOTE_F4,8,  NOTE_E4,4, NOTE_C4,4,
+;  NOTE_D4,4,  NOTE_E4,8,  NOTE_F4,8,  NOTE_E4,4, NOTE_D4,4,
+;  NOTE_C4,4,  NOTE_D4,4,  NOTE_G3,2,
+;
+;  NOTE_E4,4,  NOTE_E4,4,  NOTE_F4,4,  NOTE_G4,4,//12
+;  NOTE_G4,4,  NOTE_F4,4,  NOTE_E4,4,  NOTE_D4,4,
+;  NOTE_C4,4,  NOTE_C4,4,  NOTE_D4,4,  NOTE_E4,4,
+;  NOTE_D4,-4,  NOTE_C4,8,  NOTE_C4,2
+;
+;};
+
+	.DSEG
+;
+;int melody2[] = {
+;
+;  NOTE_B4, 16, NOTE_B5, 16, NOTE_FS5, 16, NOTE_DS5, 16, //1
+;  NOTE_B5, 32, NOTE_FS5, -16, NOTE_DS5, 8, NOTE_C5, 16,
+;  NOTE_C6, 16, NOTE_G6, 16, NOTE_E6, 16, NOTE_C6, 32, NOTE_G6, -16, NOTE_E6, 8,
+;
+;  NOTE_B4, 16,  NOTE_B5, 16,  NOTE_FS5, 16,   NOTE_DS5, 16,  NOTE_B5, 32,  //2
+;  NOTE_FS5, -16, NOTE_DS5, 8,  NOTE_DS5, 32, NOTE_E5, 32,  NOTE_F5, 32,
+;  NOTE_F5, 32,  NOTE_FS5, 32,  NOTE_G5, 32,  NOTE_G5, 32, NOTE_GS5, 32,  NOTE_A5, 16, NOTE_B5, 8
+;
+;
+;};
+;
+;// sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
+;// there are two values per note (pitch and duration), so for each note there are four bytes
+;int notes  = sizeof(melody)/sizeof(melody[0])/2;
+;int notes2 = sizeof(melody2)/sizeof(melody2[0])/ 2;
+;
+;
+;// this calculates the duration of a whole note in ms (60s/tempo)*4 beats
+;int wholenote = 2105;
+;int wholenote2 = 2286;
+;
+;
+;int divider = 0, noteDuration = 0;
+;
+;
+;void tono (float frec)
+; 0000 0095 {
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0000 0096     float Cuentas;
+; 0000 0097     unsigned int CuentasEnt;
+; 0000 0098     DDRB.5=1;   //PB5 de salida (bocina)
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+;PCODE: $00000011 VOL: 0
+;PCODE: $00000012 VOL: 0
+;	frec -> Y+6
+;	Cuentas -> Y+2
+;	CuentasEnt -> R16,R17
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+; 0000 0099     Cuentas=500000.0/frec;
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+;PCODE: $00000018 VOL: 0
+; 0000 009A     CuentasEnt=Cuentas;                  //Ejemplo 1 CuentasEnt=1702                Ejemplo 2 CuentasEnt=1911
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+;PCODE: $0000001B VOL: 0
+; 0000 009B     if ((Cuentas-CuentasEnt)>=0.5)
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+; 0000 009C        CuentasEnt++;                     //Ejemplo 1 CuentasEnt=1703                Ejemplo 2 CuentasEnt=1911
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+; 0000 009D 
+; 0000 009E     TCCR1A=0x40;   //Modo de CTC
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+; 0000 009F     TCCR1B=0x09;   //Sin pre-escalador (CK)
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0000 00A0     OCR1AH=(CuentasEnt-1)/256;
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+; 0000 00A1     OCR1AL=(CuentasEnt-1)%256;
+;PCODE: $00000030 VOL: 0
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+; 0000 00A2 }
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+;PCODE: $0000003A VOL: 0
+;
+;void noTono()
+; 0000 00A5 {
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+; 0000 00A6    TCCR1A=0;
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+; 0000 00A7    TCCR1B=0;    //Apaga timer (stop)
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+; 0000 00A8 }
+;PCODE: $00000041 VOL: 0
+;PCODE: $00000042 VOL: 0
+;
+;
+;void main(void){
+; 0000 00AB void main(void){
+;PCODE: $00000043 VOL: 0
+; 0000 00AC     unsigned int thisNote;
+; 0000 00AD     CLKPR=0x80;
+;	thisNote -> R16,R17
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+; 0000 00AE     CLKPR=0x04;
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+; 0000 00AF     PORTC.0 = 1;
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+; 0000 00B0     PORTC.1 = 1;
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+; 0000 00B1 
+; 0000 00B2     while(1){
+;PCODE: $0000004C VOL: 0
+; 0000 00B3         if(PINC.0 == 0){
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+; 0000 00B4             for (thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+;PCODE: $00000050 VOL: 0
+;PCODE: $00000051 VOL: 0
+;PCODE: $00000052 VOL: 0
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 0
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+;PCODE: $00000058 VOL: 0
+;PCODE: $00000059 VOL: 0
+; 0000 00B5                 if(PINC.1==0) break;
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 0
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+; 0000 00B6                 // calculates the duration of each note
+; 0000 00B7                 divider = melody[thisNote + 1];
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+;PCODE: $00000064 VOL: 0
+; 0000 00B8                 if (divider > 0) {
+;PCODE: $00000065 VOL: 0
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+; 0000 00B9                   // regular note, just proceed
+; 0000 00BA                   noteDuration = (wholenote) / divider;
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+; 0000 00BB                 } else if (divider < 0) {
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+; 0000 00BC                   // dotted notes are represented with negative durations!!
+; 0000 00BD                   divider=(-1)*divider;
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+; 0000 00BE                   noteDuration = (wholenote) / divider;
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+;PCODE: $00000078 VOL: 0
+; 0000 00BF 
+; 0000 00C0                   noteDuration=noteDuration*1.5;
+;PCODE: $00000079 VOL: 0
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+;PCODE: $0000007F VOL: 0
+; 0000 00C1                 }
+; 0000 00C2 
+; 0000 00C3                 tono(melody[thisNote]);
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 0
+;PCODE: $00000086 VOL: 0
+;PCODE: $00000087 VOL: 0
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+; 0000 00C4                 delay_ms(noteDuration*0.9);
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
+; 0000 00C5                 noTono();
+;PCODE: $00000091 VOL: 0
+; 0000 00C6                 delay_ms(noteDuration*0.1);
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+;PCODE: $00000094 VOL: 0
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+; 0000 00C7 
+; 0000 00C8                 if(PINC.1==0) break;
+;PCODE: $00000099 VOL: 0
+;PCODE: $0000009A VOL: 0
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+; 0000 00C9             }
+;PCODE: $0000009D VOL: 0
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+;PCODE: $000000A1 VOL: 0
+;PCODE: $000000A2 VOL: 0
+; 0000 00CA         }
+; 0000 00CB 
+; 0000 00CC         if(PINC.1==0){
+;PCODE: $000000A3 VOL: 0
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+;PCODE: $000000A6 VOL: 0
+; 0000 00CD             for (thisNote = 0; thisNote < notes2 * 2; thisNote = thisNote + 2) {
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+;PCODE: $000000AC VOL: 0
+;PCODE: $000000AD VOL: 0
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+; 0000 00CE                 if(PINC.0==0) break;
+;PCODE: $000000B1 VOL: 0
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+; 0000 00CF 
+; 0000 00D0                 // calculates the duration of each note
+; 0000 00D1                 divider = melody2[thisNote + 1];
+;PCODE: $000000B5 VOL: 0
+;PCODE: $000000B6 VOL: 0
+;PCODE: $000000B7 VOL: 0
+;PCODE: $000000B8 VOL: 0
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+;PCODE: $000000BB VOL: 0
+; 0000 00D2                 if (divider > 0) {
+;PCODE: $000000BC VOL: 0
+;PCODE: $000000BD VOL: 0
+;PCODE: $000000BE VOL: 0
+; 0000 00D3                   // regular note, just proceed
+; 0000 00D4                   noteDuration = (wholenote2) / divider;
+;PCODE: $000000BF VOL: 0
+;PCODE: $000000C0 VOL: 0
+;PCODE: $000000C1 VOL: 0
+;PCODE: $000000C2 VOL: 0
+; 0000 00D5                 } else if (divider < 0) {
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+;PCODE: $000000C5 VOL: 0
+;PCODE: $000000C6 VOL: 0
+;PCODE: $000000C7 VOL: 0
+; 0000 00D6                   // dotted notes are represented with negative durations!!
+; 0000 00D7                   divider = (-1)*divider;
+;PCODE: $000000C8 VOL: 0
+;PCODE: $000000C9 VOL: 0
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+; 0000 00D8                   noteDuration = (wholenote2) / divider;
+;PCODE: $000000CC VOL: 0
+;PCODE: $000000CD VOL: 0
+;PCODE: $000000CE VOL: 0
+;PCODE: $000000CF VOL: 0
+; 0000 00D9                   noteDuration = noteDuration * 1.5; // increases the duration in half for dotted notes
+;PCODE: $000000D0 VOL: 0
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+;PCODE: $000000D3 VOL: 0
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+; 0000 00DA                 }
+; 0000 00DB 
+; 0000 00DC                 tono(melody2[thisNote]);
+;PCODE: $000000D7 VOL: 0
+;PCODE: $000000D8 VOL: 0
+;PCODE: $000000D9 VOL: 0
+;PCODE: $000000DA VOL: 0
+;PCODE: $000000DB VOL: 0
+;PCODE: $000000DC VOL: 0
+;PCODE: $000000DD VOL: 0
+;PCODE: $000000DE VOL: 0
+;PCODE: $000000DF VOL: 0
+;PCODE: $000000E0 VOL: 0
+; 0000 00DD                 delay_ms(noteDuration*0.9);
+;PCODE: $000000E1 VOL: 0
+;PCODE: $000000E2 VOL: 0
+;PCODE: $000000E3 VOL: 0
+;PCODE: $000000E4 VOL: 0
+;PCODE: $000000E5 VOL: 0
+;PCODE: $000000E6 VOL: 0
+;PCODE: $000000E7 VOL: 0
+; 0000 00DE                 noTono();
+;PCODE: $000000E8 VOL: 0
+; 0000 00DF                 delay_ms(noteDuration*0.1);
+;PCODE: $000000E9 VOL: 0
+;PCODE: $000000EA VOL: 0
+;PCODE: $000000EB VOL: 0
+;PCODE: $000000EC VOL: 0
+;PCODE: $000000ED VOL: 0
+;PCODE: $000000EE VOL: 0
+;PCODE: $000000EF VOL: 0
+; 0000 00E0 
+; 0000 00E1                 if(PINC.0==0) break;
+;PCODE: $000000F0 VOL: 0
+;PCODE: $000000F1 VOL: 0
+;PCODE: $000000F2 VOL: 0
+;PCODE: $000000F3 VOL: 0
+; 0000 00E2             }
+;PCODE: $000000F4 VOL: 0
+;PCODE: $000000F5 VOL: 0
+;PCODE: $000000F6 VOL: 0
+;PCODE: $000000F7 VOL: 0
+;PCODE: $000000F8 VOL: 0
+;PCODE: $000000F9 VOL: 0
+; 0000 00E3         }
+; 0000 00E4     }
+;PCODE: $000000FA VOL: 0
+;PCODE: $000000FB VOL: 0
+;PCODE: $000000FC VOL: 0
+; 0000 00E5 }
+;PCODE: $000000FD VOL: 0
+;PCODE: $000000FE VOL: 0
+;PCODE: $000000FF VOL: 0
