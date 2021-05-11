@@ -7,7 +7,7 @@ A=Freeware, for evaluation and
 C=
 D=23/04/2021 12:10:28 p. m.
 Files=1
-OpenedFiles=2
+OpenedFiles=1
 AllowDisplayFunctionCallTree=1
 CleanUp=2
 DebugOutputListFilesDirectory=Debug\List
@@ -24,6 +24,14 @@ OF1=Contador.c
 TimeStamp1=1385670525
 OF2=..\..\Microcontroladores\ControlMotor\ControlMotor.c
 TimeStamp2=1385584054
+EditorPanelMode=0
+ActiveEditorPanel=0
+Active0=0
+EditorPanel0=0
+PageIndex0=0
+Active1=1
+EditorPanel1=0
+PageIndex1=1
 non-commercial use only
 [CompilerDebug]
 Chip=ATmega2560
@@ -689,13 +697,13 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1385721077
+TimeStamp=1386921539
 [Bookmarks11]
 TimeStamp=1385670525
 Row=5
 Column=0
 ScrollPosX=0
-ScrollPosY=15
+ScrollPosY=3
 BK0=-1
 BK1=-1
 BK2=-1
@@ -828,7 +836,7 @@ F4=D:\CodeVision\inc\delay.h
 F5=D:\CodeVision\inc\stdio.h
 F6=D:\CodeVision\inc\io.h
 F7=D:\CodeVision\inc\stdarg.h
-[FoldedCode11]
-Blocks=0
 [FoldedCode2]
+Blocks=0
+[FoldedCode11]
 Blocks=0

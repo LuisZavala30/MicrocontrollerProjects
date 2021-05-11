@@ -1,7 +1,0 @@
-VERSION:3 SOURCE_TIMESTAMP:5297A77D
-NODE:I LEVEL:0 LINE:18 "D:\CodeVision\inc\mega2560.h"
-NODE:I LEVEL:0 LINE:19 "D:\CodeVision\inc\display.h"
-NODE:I LEVEL:0 LINE:20 "D:\CodeVision\inc\stdio.h"
-NODE:V LEVEL:0 LINE:23 "Cuenta -> RAM:????"
-NODE:V LEVEL:0 LINE:24 "Cadena -> RAM:????"
-NODE:F LEVEL:0 LINE:26 "main(void)"
